@@ -1,0 +1,90 @@
+import React, { useState } from "react";
+import { TextInput, SafeAreaView, StyleSheet, Text, Button, TouchableHighlight } from "react-native";
+
+export default function Signup({navigation}) {
+    const [userName, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const handleSignup = () => {
+        console.warn(userName);
+        // console.warn(password);
+        // console.warn(email);
+        // console.warn(confirmPassword);
+        navigation.push("Signin")
+    }
+    return (
+        <SafeAreaView style={styles.container}>
+            <TextInput
+                onChangeText={(name) => setUsername(name)}
+                value={userName}
+                style={styles.emailInput}
+                placeholder="Enter your email"
+            />
+            <TextInput
+                onChangeText={(email) => setEmail(email)}
+                value={email}
+                style={styles.emailInput}
+                placeholder="Enter your email"
+            />
+
+            <TextInput
+                onChangeText={(password) => setPassword(password)}
+                value={password}
+                style={styles.emailInput}
+                placeholder="Create Password"
+            />
+            <TextInput
+                onChangeText={(password) => setConfirmPassword(password)}
+                value={confirmPassword}
+                style={styles.passwordInput}
+                placeholder="Confirm Password"
+            />
+
+            <TouchableHighlight style={styles.button}>
+                <Button title="Signup" style={styles.buttonText}
+                onPress={handleSignup} 
+                ></Button>
+            </TouchableHighlight>
+        </SafeAreaView>
+    )
+
+}
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'purple',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    emailInput: {
+        width: 250,
+        height: 50,
+        borderWidth: 1,
+        borderRadius: 15,
+        borderColor: 'black',
+        padding: 10,
+        backgroundColor:'#fff',
+        marginBottom:10,
+    },
+    passwordInput:{
+        width: 250,
+        height: 50,
+        borderWidth: 1,
+        borderRadius: 15,
+        borderColor: 'black',
+        padding: 10,
+        backgroundColor:'#fff'
+    },
+    button: {
+        // backgroundColor: 'lightgreen',
+        borderRadius: 15,
+        // marginTop: 25,
+        padding: 10,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: 'white'
+    }
+});

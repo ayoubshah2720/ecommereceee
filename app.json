@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "ecommereceeee",
+    "slug": "ecommereceeee",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-1596424030057084~8748255268",
+    "ios_app_id": "ca-app-pub-1596424030057084~8748255268"
+  },
+  "name": "ecommereceeee"
+}
