@@ -4,21 +4,22 @@ import auth from '@react-native-firebase/auth'
 
 export default function Home({ route }) {
     const handleSingout = async () => {
-        const isAuth = await auth().signOut().then((res) => {
-            const isSignedOut = res
-            if (res) {
-                navigation.replace('Signin');
-            }
-        }).catch((err) => {
-            console.log(err)
-        });
+        const isAuth = await auth().signOut()
+        navigation.replace('Signin');
+        // .then((res) => {
+        //     const isSignedOut = res
+        //     if (res) {
+        //     }
+        // }).catch((err) => {
+        //     console.log(err)
+        // });
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}> Home </Text>
-            <Text style={{ fontSize: 20 }}> {route.params.email} </Text>
-            <Text style={{ fontSize: 20 }}> {route.params.userId} </Text>
+            <Text style={{ fontSize: 20 }}> {route?.params?.email} </Text>
+            <Text style={{ fontSize: 20 }}> {route?.params?.userId} </Text>
             <Button title="Singout" onPress={handleSingout} />
             <View style={styles.bottomBanner}>
                 <BannerAd style={styles.banner} size={BannerAdSize.FULL_BANNER} unitId={TestIds.BANNER} />
