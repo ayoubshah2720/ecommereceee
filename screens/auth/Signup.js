@@ -64,6 +64,10 @@ export default function Signup({navigation}) {
                 onPress={handleSignup} 
                 ></Button>
             </TouchableHighlight>
+
+            <TouchableHighlight onPress={()=> navigation.navigate('Signin')}>
+            <Text style={styles.buttonText}>Alread have an account?</Text>
+            </TouchableHighlight>
         </SafeAreaView>
     )
 
