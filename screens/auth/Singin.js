@@ -1,14 +1,34 @@
 import React, { useState } from "react";
 import { TextInput, SafeAreaView, StyleSheet, Text, TouchableHighlight, View, Button } from "react-native";
+import auth from '@react-native-firebase/auth';
+
 
 export default function Signin({navigation}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSingin = () => {
-        console.log(email);
+    const handleSingin = async () => {
+        const isAuth = await auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((res) => {
+          const isUserLoggedIn = res
+          console.log('User Logged-In Successfully..!');
+          console.log('isUserLoggedIn',isUserLoggedIn);
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
+      
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+      
+          console.error(error);
+        });
         navigation.replace("Home")
     }
+
     return (
         <SafeAreaView style={styles.container}>
             <TextInput
@@ -23,6 +43,7 @@ export default function Signin({navigation}) {
                 value={password}
                 style={styles.passwordInput}
                 placeholder="Create Password"
+                secureTextEntry={true}
             />
 
             <TouchableHighlight style={styles.button}>

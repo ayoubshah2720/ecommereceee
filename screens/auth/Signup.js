@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, SafeAreaView, StyleSheet, Text, Button, TouchableHighlight } from "react-native";
+import auth from '@react-native-firebase/auth';
 
 export default function Signup({navigation}) {
     const [userName, setUsername] = useState("");
@@ -7,11 +8,25 @@ export default function Signup({navigation}) {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleSignup = () => {
-        console.warn(userName);
-        // console.warn(password);
-        // console.warn(email);
-        // console.warn(confirmPassword);
+    const handleSignup = async () => {
+        const isAuth = await auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((res) => {
+        const isUserCreated = res
+          console.log('User account created & signed in!');
+          console.log('isUserCreated',isUserCreated);
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
+      
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+      
+          console.error(error);
+        });
         navigation.push("Signin")
     }
     return (
@@ -20,7 +35,7 @@ export default function Signup({navigation}) {
                 onChangeText={(name) => setUsername(name)}
                 value={userName}
                 style={styles.emailInput}
-                placeholder="Enter your email"
+                placeholder="Enter User Name"
             />
             <TextInput
                 onChangeText={(email) => setEmail(email)}
@@ -34,12 +49,14 @@ export default function Signup({navigation}) {
                 value={password}
                 style={styles.emailInput}
                 placeholder="Create Password"
+                secureTextEntry={true}
             />
             <TextInput
                 onChangeText={(password) => setConfirmPassword(password)}
                 value={confirmPassword}
                 style={styles.passwordInput}
                 placeholder="Confirm Password"
+                secureTextEntry={true}
             />
 
             <TouchableHighlight style={styles.button}>
