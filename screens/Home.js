@@ -1,25 +1,52 @@
-import { StyleSheet, Text, View } from "react-native"
+import { Button, StyleSheet, Text, View } from "react-native"
 import { BannerAd, BannerAdSize, TestIds } from "react-native-google-mobile-ads"
+import auth from '@react-native-firebase/auth'
 
-export default function Home(){
+export default function Home({ route }) {
+    const handleSingout = async () => {
+        const isAuth = await auth().signOut().then((res) => {
+            const isSignedOut = res
+            if (res) {
+                navigation.replace('Signin');
+            }
+        }).catch((err) => {
+            console.log(err)
+        });
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}> Home </Text>
-            <BannerAd style={{bottom:0}} size={BannerAdSize.FULL_BANNER} unitId={TestIds.BANNER} />
+            <Text style={{ fontSize: 20 }}> {route.params.email} </Text>
+            <Text style={{ fontSize: 20 }}> {route.params.userId} </Text>
+            <Button title="Singout" onPress={handleSingout} />
+            <View style={styles.bottomBanner}>
+                <BannerAd style={styles.banner} size={BannerAdSize.FULL_BANNER} unitId={TestIds.BANNER} />
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:'orange'
+    container: {
+        flex: 1,
+        backgroundColor: 'orange',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     title: {
-        flex:1,
-        alignItems:'center',
-        justifyContent:'center',
-        fontSize:36,
-        fontWeight:'bold'
-}
+        // flex:1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 36,
+        fontWeight: 'bold'
+    },
+    bottomBanner: {
+        position: 'absolute', //Here is the trick
+        bottom: 0, //Here is the trick
+    },
+    banner: {
+        position: 'absolute', //Here is the trick
+        bottom: 0, //Here is the trick
+    },
 })

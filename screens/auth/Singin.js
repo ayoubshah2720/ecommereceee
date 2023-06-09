@@ -3,30 +3,37 @@ import { TextInput, SafeAreaView, StyleSheet, Text, TouchableHighlight, View, Bu
 import auth from '@react-native-firebase/auth';
 
 
-export default function Signin({navigation}) {
+export default function Signin({ navigation }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSingin = async () => {
-        const isAuth = await auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((res) => {
-          const isUserLoggedIn = res
-          console.log('User Logged-In Successfully..!');
-          console.log('isUserLoggedIn',isUserLoggedIn);
-        })
-        .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
-          }
-      
-          if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
-          }
-      
-          console.error(error);
-        });
-        navigation.replace("Home")
+        if (email.length > 0 && password.length > 0) {
+            const isAuth = await auth()
+                .signInWithEmailAndPassword(email, password)
+                .then((res) => {
+                    const isUserLoggedIn = res
+                    console.log('User Logged-In Successfully..!');
+                    console.log('isUserLoggedIn', isUserLoggedIn);
+                    navigation.replace("Home",{
+                        email:isUserLoggedIn.user.email,
+                        userId:isUserLoggedIn.user.uid
+                    })
+                })
+                .catch(error => {
+                    if (error.code === 'auth/email-already-in-use') {
+                        console.log('That email address is already in use!');
+                    }
+
+                    if (error.code === 'auth/invalid-email') {
+                        console.log('That email address is invalid!');
+                    }
+
+                    console.error(error);
+                });
+        } else {
+            alert('Please Enter All Data...');
+        }
     }
 
     return (
@@ -50,10 +57,10 @@ export default function Signin({navigation}) {
                 <Button onPress={handleSingin} title="Signin" style={styles.buttonText}></Button>
             </TouchableHighlight>
 
-            <TouchableHighlight onPress={()=> navigation.navigate('Signup')} style={styles.button}>
+            <TouchableHighlight onPress={() => navigation.replace('Signup')} style={styles.button}>
                 <View style={styles.noAccount}>
-                <Text style={styles.buttonText}>Don't have account?</Text>
-                <Text style={styles.buttonText}>Signup</Text>
+                    <Text style={styles.buttonText}>Don't have account?</Text>
+                    <Text style={styles.buttonText}>Signup</Text>
                 </View>
             </TouchableHighlight>
         </SafeAreaView>
@@ -74,17 +81,17 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         borderColor: 'black',
         padding: 10,
-        backgroundColor:'#fff',
-        marginBottom:10,
+        backgroundColor: '#fff',
+        marginBottom: 10,
     },
-    passwordInput:{
+    passwordInput: {
         width: 250,
         height: 50,
         borderWidth: 1,
         borderRadius: 15,
         borderColor: 'black',
         padding: 10,
-        backgroundColor:'#fff'
+        backgroundColor: '#fff'
     },
     button: {
         // backgroundColor: 'lightgreen',
@@ -96,7 +103,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white'
     },
-    noAccount:{
+    noAccount: {
 
     }
 });
