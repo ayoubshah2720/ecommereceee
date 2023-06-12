@@ -9,6 +9,8 @@ import Signup from './screens/auth/Signup';
 import Signin from './screens/auth/Singin';
 import auth from "@react-native-firebase/auth";
 import Toast from 'react-native-root-toast';
+import SingleProductPage from './screens/SingleProductPage';
+import ProductsPage from './screens/ProductsPage';
 
 
 export default function App() {
@@ -58,6 +60,20 @@ export default function App() {
           <Stack.Screen
             name='Home'
             component={Home}
+          />
+        ) : null}
+
+        {isUserLoggedIn ? (
+          <Stack.Screen
+            name='Products'
+            component={ProductsPage}
+          />
+        ) : null}
+
+        {isUserLoggedIn ? (
+          <Stack.Screen
+            name='SingleProduct'
+            component={SingleProductPage}
           />
         ) : null}
         {!isUserLoggedIn ? (

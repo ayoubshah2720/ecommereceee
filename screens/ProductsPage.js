@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
 
-const ProductPage = () => {
+const ProductsPage = ({navigation}) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -19,15 +19,20 @@ const ProductPage = () => {
     }
   };
 
+  const handleProduct = (product) => {
+    navigation.navigate('SingleProduct',product)
+  }
   const renderProductItem = ({ item }) => (
     <View style={styles.productItem}>
+      <TouchableOpacity onPress={() => handleProduct(item)}>
       <Image
         source={{ uri: item.image }}
         style={styles.productImage}
         resizeMode="cover"
-      />
+        />
       <Text style={styles.productName}>{item.name}</Text>
       <Text style={styles.productPrice}>${item.price}</Text>
+    </TouchableOpacity>
     </View>
   );
 
@@ -39,6 +44,7 @@ const ProductPage = () => {
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         contentContainerStyle={styles.productList}
+        onpress
       />
     </View>
   );
@@ -81,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductPage;
+export default ProductsPage;
