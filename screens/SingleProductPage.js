@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 const SingleProductPage = ({ route, navigation }) => {
-  const { product } = route.params;
+  const product  = route.params;
 
-  const handleAddToCart = () => {
-    // Implement your add to cart logic here
-  };
+  useEffect(()=>{
+    console.log('product',product)
+    console.log('route.params',route.params)
+  })
+
+  // const handleAddToCart = () => {
+  //   // Implement your add to cart logic here
+  // };
 
   return (
     <View style={styles.container}>
@@ -14,7 +19,8 @@ const SingleProductPage = ({ route, navigation }) => {
       <Text style={styles.productName}>{product.name}</Text>
       <Text style={styles.productPrice}>${product.price}</Text>
       <Text style={styles.productDescription}>{product.description}</Text>
-      <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
+      {/* <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}> */}
+      <TouchableOpacity style={styles.addToCartButton}>
         <Text style={styles.addToCartButtonText}>Add to Cart</Text>
       </TouchableOpacity>
     </View>

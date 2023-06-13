@@ -1,6 +1,7 @@
 import { Button, StyleSheet, Text, View } from "react-native"
 import { BannerAd, BannerAdSize, TestIds } from "react-native-google-mobile-ads"
 import auth from '@react-native-firebase/auth'
+import ProductsPage from './ProductsPage'
 
 export default function Home({ route }) {
     const handleSingout = async () => {
@@ -20,6 +21,7 @@ export default function Home({ route }) {
             <Text style={styles.title}> Home </Text>
             <Text style={{ fontSize: 20 }}> {route?.params?.email} </Text>
             <Text style={{ fontSize: 20 }}> {route?.params?.userId} </Text>
+            <ProductsPage/>
             <Button title="Singout" onPress={handleSingout} />
             <View style={styles.bottomBanner}>
                 <BannerAd style={styles.banner} size={BannerAdSize.FULL_BANNER} unitId={TestIds.BANNER} />
@@ -32,8 +34,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'orange',
-        alignItems: 'center',
-        justifyContent: 'center',
+        // alignItems: 'center',
+        // justifyContent: 'center',
     },
     title: {
         // flex:1,

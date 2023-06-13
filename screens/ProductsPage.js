@@ -1,12 +1,14 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const ProductsPage = ({navigation}) => {
+const ProductsPage = ({}) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     fetchProducts();
   }, []);
+  const navigation = useNavigation()
 
   const fetchProducts = async () => {
     try {
